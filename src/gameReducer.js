@@ -9,23 +9,9 @@ export const restartGame = () => ({type: RESTART_GAME})
 export const waitingColor = () => ({type: WAITING_COLOR})
 
 export const gameReducer = (state, action) => {
-    console.log(action);
     switch (action.type) {
         case CHECK_COLOR: {
-            console.log(state.currentTile);
-            const tile = state.tiles.find(tile => tile.id === action.id)
-            //защита от нажатия на одну и ту же плитку
-            // if(state.currentTile.find(currTile => currTile.id === action.id)){
-            //     return state
-            // }
             if (state.currentTile.length === 2) {
-                //     return {
-                //         ...state,
-                //         visible: tile.visible = true,
-                //         currentTile: [...state.currentTile, tile],
-                //     }
-                // } else {
-                //     state.currentTile.push(tile)
                 const newStep = state.steps - 1
                 //если плитки равны по цвету
                 if (state.currentTile[0].colorNum === state.currentTile[1].colorNum) {
@@ -65,6 +51,7 @@ export const gameReducer = (state, action) => {
         }
         case SHOW_COLOR: {
             const tile = state.tiles.find(tile => tile.id === action.id)
+            //защита от нажатия на одну и ту же плитку
             if (state.currentTile.find(currTile => currTile.id === action.id)) {
                 return state
             }
@@ -94,10 +81,6 @@ export const gameReducer = (state, action) => {
             }
         }
         case RESTART_GAME: {
-            // const initTiles = state.tiles.map(tile => {
-            //     tile.visible = false
-            //     tile.tileState = "able"
-            // })
             return {
                 ...state,
                 steps: 8,
@@ -112,53 +95,3 @@ export const gameReducer = (state, action) => {
             return state
     }
 }
-
-// case CHECK_COLOR: {
-//     const tile = state.tiles.find(tile => tile.id === action.id)
-//     //защита от нажатия на одну и ту же плитку
-//     if(state.currentTile.find(currTile => currTile.id === action.id)){
-//         return state
-//     }
-//     if (state.currentTile.length === 0) {
-//         return {
-//             ...state,
-//             visible: tile.visible = true,
-//             currentTile: [...state.currentTile, tile],
-//         }
-//     } else {
-//         state.currentTile.push(tile)
-//         const newStep = state.steps - 1
-//         //если плитки равны по цвету
-//         if (state.currentTile[0].colorNum === state.currentTile[1].colorNum) {
-//             return {
-//                 ...state,
-//                 steps: newStep,
-//                 tiles: state.tiles.map(tile => {
-//                     if (tile.id === state.currentTile[0].id || tile.id === state.currentTile[1].id) {
-//                         return {
-//                             ...tile,
-//                             visible: true,
-//                             tileState: "disappear",
-//
-//                         }
-//                     }
-//                     return tile
-//                 }),
-//                 currentTile: []
-//             }
-//             //если плитки не равны по цвету
-//         } else {
-//             return {
-//                 ...state,
-//                 steps: newStep,
-//                 tiles: state.tiles.map(tile => {
-//                     if (tile.id === state.currentTile[0].id || tile.id === state.currentTile[1].id) {
-//                         return {...tile, tileState: "disable", visible: false}
-//                     }
-//                     return tile
-//                 }),
-//                 currentTile: []
-//             }
-//         }
-//     }
-// }

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {GameContext} from "./gameState";
 import Button from "@material-ui/core/Button";
@@ -23,9 +23,7 @@ const useStyles = makeStyles((theme) => ({
     disableTile: {
         background: "#f6e0cc",
         transition: "background 1s ease",
-
     }
-
 }))
 
 export const Tile = ({tile}) => {
@@ -37,7 +35,6 @@ export const Tile = ({tile}) => {
             waitingTileColor()
             checkTileColor(id)
         }, 400)
-        // checkTileColor(id)
     }
     return (
         <Button className={tile.tileState === "disappear" ? classes.disappearTile : classes.tile}
