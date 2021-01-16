@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         position: "absolute",
+        bottom: 100,
+    },
+    button2: {
+        position: "absolute",
         bottom: 50,
     },
     winner: {
@@ -56,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const App = () => {
+    const {tiles, steps, matches, restartGameTiles, shuffleTilesColor, firstLookOnTiles, readyGameTiles} = useContext(GameContext)
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -65,9 +70,9 @@ const App = () => {
     };
     useEffect(() => {
         handleClickOpen()
+        // shuffleTilesColor()
     }, [])
     const classes = useStyles()
-    const {tiles, steps, matches, restartGameTiles} = useContext(GameContext)
     const gameTiles = tiles.map((tile) => <Tile tile={tile} key={tile.id}/>)
     return (
         <div className={classes.scene}>
@@ -91,6 +96,8 @@ const App = () => {
                     <Button variant="outlined" onClick={() => {
                         handleClose();
                         restartGameTiles()
+                        firstLookOnTiles()
+                        setTimeout(() => readyGameTiles(), 3000)
                     }} color="primary">
                         start game
                     </Button>
@@ -118,11 +125,25 @@ const App = () => {
             {steps < 8 &&
             <Button
                 variant="outlined"
-                onClick={restartGameTiles}
+                onClick={() => {
+                    restartGameTiles()
+                    firstLookOnTiles()
+                    setTimeout(() => readyGameTiles(), 3000)
+                }}
                 className={classes.button}>
                 Restart game
             </Button>
             }
+            <Button
+                variant="outlined"
+                onClick={() => {
+                    shuffleTilesColor()
+                    firstLookOnTiles()
+                    setTimeout(() => readyGameTiles(), 3000)
+                }}
+                className={classes.button2}>
+                Shuffle tiles
+            </Button>
         </div>
     );
 }

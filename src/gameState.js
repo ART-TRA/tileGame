@@ -1,5 +1,14 @@
 import React, {createContext, useReducer} from "react";
-import {checkColor, gameReducer, restartGame, showColor, waitingColor} from "./gameReducer";
+import {
+    checkColor,
+    firstLook,
+    gameReducer,
+    readyGame,
+    restartGame,
+    showColor,
+    shuffleTiles,
+    waitingColor
+} from "./gameReducer";
 
 const gameState = {
     steps: 8,
@@ -125,6 +134,15 @@ const gameState = {
 export const GameContext = createContext();
 export const GameState = (props) => {
     const [state, dispatch] = useReducer(gameReducer, gameState)
+    const firstLookOnTiles = () => {
+        dispatch(firstLook())
+    }
+    const readyGameTiles = () => {
+        dispatch(readyGame())
+    }
+    const shuffleTilesColor = () => {
+        dispatch(shuffleTiles())
+    }
     const showTileColor = (id) => {
         dispatch(showColor(id))
     }
@@ -147,6 +165,9 @@ export const GameState = (props) => {
                 checkTileColor,
                 waitingTileColor,
                 restartGameTiles,
+                shuffleTilesColor,
+                firstLookOnTiles,
+                readyGameTiles,
             }}>
             {props.children}
         </GameContext.Provider>
