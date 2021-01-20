@@ -11,8 +11,9 @@ import {
 } from "./gameReducer";
 
 const gameState = {
-    steps: 8,
+    steps: 1,
     matches: 0,
+    score: 0,
     currentTile: [],
     tiles: [
         {
@@ -161,6 +162,7 @@ export const GameState = (props) => {
                 tiles: state.tiles,
                 steps: state.steps,
                 matches: state.matches,
+                score: state.score,
                 showTileColor,
                 checkTileColor,
                 waitingTileColor,

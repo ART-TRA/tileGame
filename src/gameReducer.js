@@ -41,20 +41,23 @@ export const gameReducer = (state, action) => {
             }
             return {
                 ...state,
-                steps: 8,
+                steps: 1,
+                score: 0,
                 matches: 0,
                 currentTile: [],
             }
         }
         case CHECK_COLOR: {
             if (state.currentTile.length === 2) {
-                const newStep = state.steps - 1
+                const newStep = state.steps + 1
+                const newScore = state.score + 5
                 //если плитки равны по цвету
                 if (state.currentTile[0].colorNum === state.currentTile[1].colorNum) {
                     const newMatch = state.matches + 1
                     return {
                         ...state,
                         steps: newStep,
+                        score: newScore,
                         matches: newMatch,
                         tiles: state.tiles.map(tile => {
                             if (tile.id === state.currentTile[0].id || tile.id === state.currentTile[1].id) {
@@ -71,12 +74,14 @@ export const gameReducer = (state, action) => {
                     }
                     //если плитки не равны по цвету
                 } else {
+                    const newScore = state.score - 1
                     return {
                         ...state,
                         steps: newStep,
+                        score: newScore,
                         tiles: state.tiles.map(tile => {
                             if (tile.id === state.currentTile[0].id || tile.id === state.currentTile[1].id) {
-                                return {...tile, tileState: "disable", visible: false}
+                                return {...tile, tileState: "able", visible: false}
                             }
                             return tile
                         }),
@@ -117,7 +122,8 @@ export const gameReducer = (state, action) => {
         case RESTART_GAME: {
             return {
                 ...state,
-                steps: 8,
+                steps: 1,
+                score: 0,
                 matches: 0,
                 currentTile: [],
                 tiles: state.tiles.map(tile => {
